@@ -18,14 +18,14 @@
             android:id="@+id/btDiscoverPeers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DiscoverPeer Start"
+            android:text="Discover\nPeer"
             tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/btWifiDevicePeerList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WifiDevicePeerList Start"
+            android:text="Peer\nList"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 

@@ -19,11 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WiFiDirectTest"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <!--<activity
+        <activity
             android:name=".WiFiDirectActivity"
             android:exported="true"
-            android:theme="@style/Theme.WiFiDirectTest">
+            android:theme="@style/Theme.WiFiDirectTest"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.net.wifi.p2p.STATE_CHANGED"/>
@@ -32,9 +34,9 @@
                 <action android:name="android.net.wifi.p2p.THIS_DEVICE_CHANGED"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
+        </activity>
 
-        <activity
+        <!--<activity
             android:name=".WiFiAwareActivity"
             android:exported="true"
             android:theme="@style/Theme.WiFiDirectTest">
@@ -43,7 +45,7 @@
                 <action android:name="android.net.wifi.aware.action.WIFI_AWARE_STATE_CHANGED" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>

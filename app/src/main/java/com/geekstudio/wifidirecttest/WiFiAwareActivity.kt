@@ -30,7 +30,7 @@ class WiFiAwareActivity : AppCompatActivity(R.layout.aware) {
     private var channel: WifiP2pManager.Channel? = null
     private var manager: WifiP2pManager? = null
     private var adapter: WiFiDirectAdapter? = null
-    private var receiver: WiFiDirectBroadcastReceiver? = null
+    private var receiver: WiFiBroadcastReceiver? = null
     private var publishDiscoverySession: PublishDiscoverySession? = null
     private var publishPeerHandle: PeerHandle? = null
     private var subscribeDiscoverySession: SubscribeDiscoverySession? = null
@@ -168,7 +168,7 @@ class WiFiAwareActivity : AppCompatActivity(R.layout.aware) {
             addAction(WifiAwareManager.ACTION_WIFI_AWARE_STATE_CHANGED)
         }
 
-        receiver = WiFiDirectBroadcastReceiver(manager, channel, this)
+        receiver = WiFiBroadcastReceiver(manager, channel, this)
         registerReceiver(receiver, intentFilter)
     }
 
