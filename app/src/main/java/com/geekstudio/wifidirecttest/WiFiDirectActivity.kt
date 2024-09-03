@@ -38,10 +38,10 @@ class WiFiDirectActivity : AppCompatActivity(R.layout.main) {
     private var receiver: WiFiBroadcastReceiver? = null
 
     private val port = 9999
-    private val socket = Socket()
     private val buf = ByteArray(1024)
     private var len: Int = 0
     private var hostInetAddress: InetAddress? = null
+    private var tryCount = 0
     private val handler by lazy { Handler(mainLooper) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -183,34 +183,38 @@ class WiFiDirectActivity : AppCompatActivity(R.layout.main) {
                     val serverSocket = ServerSocket(port, 50, hostInetAddress)
                     Log.d(TAG, "ServerJob ServerSocket create Success")
                     serverSocket.use {
-                        val client = serverSocket.accept()
-                        Log.d(TAG, "ServerJob accept Success")
-                        val clientHost = client.localAddress
-                        val clientPort = client.port
-                        Log.d(TAG, "ServerJob clientHost = $clientHost, clientPort = $clientPort")
+                        while (tryCount <= 20) {
+                            tryCount++
+                            val client = serverSocket.accept()
+                            Log.d(TAG, "ServerJob accept Success tryCount = $tryCount")
+                            val clientHost = client.localAddress
+                            val clientPort = client.port
+                            Log.d(TAG, "ServerJob clientHost = $clientHost, clientPort = $clientPort")
 
-                        val inputStream = ObjectInputStream(client.getInputStream())
-                        val obj = inputStream.readObject()
-                        Log.d(TAG, "ServerJob inputStream readObject = $obj")
-                        handler.post {
-                            Toast.makeText(
-                                this@WiFiDirectActivity,
-                                "ServerJob inputStream readObject = $obj",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            val inputStream = ObjectInputStream(client.getInputStream())
+                            val obj = inputStream.readObject()
+                            Log.d(TAG, "ServerJob inputStream readObject = $obj")
+                            handler.post {
+                                Toast.makeText(
+                                    this@WiFiDirectActivity,
+                                    "ServerJob inputStream readObject = $obj",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            val outputStream = ObjectOutputStream(client.getOutputStream())
+                            outputStream.writeObject("serverJob Hello")
+                            outputStream.flush()
+                            Log.d(TAG, "ServerJob outputStream Success")
+                            client.close()
                         }
-
-                        val outputStream = ObjectOutputStream(client.getOutputStream())
-                        outputStream.writeObject("serverJob Hello")
-                        outputStream.flush()
-                        Log.d(TAG, "ServerJob outputStream Success")
-                        client.close()
                         serverSocket.close()
                     }
                 }
             } else if (info.groupFormed) {
                 //Client 역할
                 CoroutineScope(Dispatchers.IO).launch {
+                    val socket = Socket()
                     socket.use {
                         Log.d(TAG, "ClientJob Start")
                         socket.bind(null)
