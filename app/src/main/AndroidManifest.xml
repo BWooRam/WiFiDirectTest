@@ -21,7 +21,7 @@
         android:theme="@style/Theme.WiFiDirectTest"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
+        <!--<activity
             android:name=".WiFiDirectActivity"
             android:exported="true"
             android:theme="@style/Theme.WiFiDirectTest"
@@ -32,6 +32,17 @@
                 <action android:name="android.net.wifi.p2p.PEERS_CHANGED"/>
                 <action android:name="android.net.wifi.p2p.CONNECTION_STATE_CHANGE"/>
                 <action android:name="android.net.wifi.p2p.THIS_DEVICE_CHANGED"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>-->
+
+        <activity
+            android:name=".WiFiDirectServiceSearchActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WiFiDirectTest"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
