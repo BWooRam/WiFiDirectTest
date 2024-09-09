@@ -75,11 +75,11 @@ class WiFiDirectServiceSearchActivity : AppCompatActivity(R.layout.main2) {
         super.onNewIntent(intent)
         Log.d(TAG, "onNewIntent intent action = ${intent?.action}")
 
-/*        if (intent?.action == WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION) {
-            initWifiDevicePeerList()
+        if (intent?.action == WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION) {
+//            initWifiDevicePeerList()
         } else if (intent?.action == WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION) {
-            initWiFiRequestConnectionInfo()
-        }*/
+//            initWiFiRequestConnectionInfo()
+        }
     }
 
     private fun initAddLocalService() {
@@ -120,12 +120,15 @@ class WiFiDirectServiceSearchActivity : AppCompatActivity(R.layout.main2) {
             Log.d(TAG, "DnsSdTxtRecordListener device = $device")
         }
 
-        val servListener = DnsSdServiceResponseListener { instanceName, registrationType, resourceType ->
-            Log.d(TAG, "DnsSdServiceResponseListener instanceName = $instanceName")
-            Log.d(TAG, "DnsSdServiceResponseListener registrationType = $registrationType")
-            Log.d(TAG, "DnsSdServiceResponseListener resourceType = $resourceType")
-        }
+        val servListener =
+            DnsSdServiceResponseListener { instanceName, registrationType, resourceType ->
+                Log.d(TAG, "DnsSdServiceResponseListener instanceName = $instanceName")
+                Log.d(TAG, "DnsSdServiceResponseListener registrationType = $registrationType")
+                Log.d(TAG, "DnsSdServiceResponseListener resourceType = $resourceType")
 
+                if (resourceType != null)
+                    adapter.addItem(resourceType)
+            }
         manager.setDnsSdResponseListeners(channel, servListener, txtListener)
 
         val serviceRequest = WifiP2pDnsSdServiceRequest.newInstance()
@@ -156,7 +159,10 @@ class WiFiDirectServiceSearchActivity : AppCompatActivity(R.layout.main2) {
                     // Command failed. Check for P2P_UNSUPPORTED, ERROR, or BUSY
                     when (code) {
                         WifiP2pManager.P2P_UNSUPPORTED -> {
-                            Log.d(TAG, "discoverServices onFailure Wi-Fi Direct isn't supported on this device.")
+                            Log.d(
+                                TAG,
+                                "discoverServices onFailure Wi-Fi Direct isn't supported on this device."
+                            )
                         }
                     }
                 }
@@ -227,7 +233,10 @@ class WiFiDirectServiceSearchActivity : AppCompatActivity(R.layout.main2) {
                             Log.d(TAG, "ServerJob accept Success tryCount = $tryCount")
                             val clientHost = client.localAddress
                             val clientPort = client.port
-                            Log.d(TAG, "ServerJob clientHost = $clientHost, clientPort = $clientPort")
+                            Log.d(
+                                TAG,
+                                "ServerJob clientHost = $clientHost, clientPort = $clientPort"
+                            )
 
                             val inputStream = ObjectInputStream(client.getInputStream())
                             val obj = inputStream.readObject()
@@ -336,7 +345,7 @@ class WiFiDirectServiceSearchActivity : AppCompatActivity(R.layout.main2) {
             addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)
         }
 
-        receiver = WiFiBroadcastReceiver(WiFiDirectActivity::class.java)
+        receiver = WiFiBroadcastReceiver(WiFiDirectServiceSearchActivity::class.java)
         registerReceiver(receiver, intentFilter)
     }
 
