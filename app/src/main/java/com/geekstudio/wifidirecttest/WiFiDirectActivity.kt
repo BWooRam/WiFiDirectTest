@@ -118,7 +118,12 @@ class WiFiDirectActivity : AppCompatActivity(R.layout.main) {
             if (peers.isEmpty()) {
                 Log.d(TAG, "initWifiDevicePeerList No devices found")
             } else {
-                Log.d(TAG, "initWifiDevicePeerList peers = $peers")
+                for(peer in peers){
+                    Log.d(TAG, "initWifiDevicePeerList peer = $peer")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        Log.d(TAG, "initWifiDevicePeerList peer wfdInfo = ${peer.wfdInfo}")
+                    }
+                }
                 adapter.setItems(peers)
             }
         }
