@@ -346,7 +346,7 @@ class WiFiDirectActivity : AppCompatActivity(R.layout.main) {
             addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)
         }
 
-        receiver = WiFiBroadcastReceiver(manager, channel, this)
+        receiver = WiFiBroadcastReceiver(WiFiDirectActivity::class.java)
         registerReceiver(receiver, intentFilter)
     }
 

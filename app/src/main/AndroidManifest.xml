@@ -43,6 +43,11 @@
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.net.wifi.p2p.STATE_CHANGED"/>
+                <action android:name="android.net.wifi.p2p.PEERS_CHANGED"/>
+                <action android:name="android.net.wifi.p2p.CONNECTION_STATE_CHANGE"/>
+                <action android:name="android.net.wifi.p2p.THIS_DEVICE_CHANGED"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

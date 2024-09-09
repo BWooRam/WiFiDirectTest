@@ -12,9 +12,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 class WiFiBroadcastReceiver(
-    private val manager: WifiP2pManager?,
-    private val channel: WifiP2pManager.Channel?,
-    private val activity: AppCompatActivity
+    private val clazz: Class<out AppCompatActivity>
 ) : BroadcastReceiver() {
     private val TAG = "WiFiDirectBroadcastReceiver"
 
@@ -35,7 +33,7 @@ class WiFiBroadcastReceiver(
                 PendingIntent.getActivity(
                     context,
                     0,
-                    Intent(context, WiFiDirectActivity::class.java).apply {
+                    Intent(context, clazz).apply {
                         setAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)
                     },
                     PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
@@ -51,7 +49,7 @@ class WiFiBroadcastReceiver(
                     PendingIntent.getActivity(
                         context,
                         0,
-                        Intent(context, WiFiDirectActivity::class.java).apply {
+                        Intent(context, clazz).apply {
                             setAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)
                         },
                         PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT

@@ -168,7 +168,7 @@ class WiFiAwareActivity : AppCompatActivity(R.layout.aware) {
             addAction(WifiAwareManager.ACTION_WIFI_AWARE_STATE_CHANGED)
         }
 
-        receiver = WiFiBroadcastReceiver(manager, channel, this)
+        receiver = WiFiBroadcastReceiver(WiFiAwareActivity::class.java)
         registerReceiver(receiver, intentFilter)
     }
 
